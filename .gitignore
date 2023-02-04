@@ -1,3 +1,9 @@
+.idea/*
+gardle/*
+gardle/
+gradlew
+gradlew.bat
+
 # Built application files
 *.apk
 *.aar
