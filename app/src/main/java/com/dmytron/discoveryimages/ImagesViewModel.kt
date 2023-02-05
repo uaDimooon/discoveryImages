@@ -3,14 +3,20 @@ package com.dmytron.discoveryimages
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.dmytron.discoveryimages.data.Image
 import com.dmytron.discoveryimages.data.ImageRepository
+import com.dmytron.discoveryimages.data.source.flickr.FlickrImageSource
+import kotlinx.coroutines.launch
 
-class ImagesViewModel(repo: ImageRepository): ViewModel() {
+class ImagesViewModel: ViewModel() {
     private val mutableImages = MutableLiveData<List<Image>>()
+    private val repo = ImageRepository.flickrRepository()
     val images: LiveData<List<Image>> = mutableImages
 
     init {
-        mutableImages.value = repo.fetchImages()
+        viewModelScope.launch {
+            mutableImages.postValue(repo.fetchImages())
+        }
     }
 }

@@ -11,7 +11,6 @@ fun ImagesGrid(images: List<Image>) {
     LazyVerticalGrid(columns = GridCells.Fixed(5)) {
         items(images) { image ->
             ImageItem(image)
-
         }
     }
 }
