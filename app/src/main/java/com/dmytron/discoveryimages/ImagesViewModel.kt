@@ -1,4 +1,4 @@
-package com.dmytron.discoveryimages.ui.theme
+package com.dmytron.discoveryimages
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

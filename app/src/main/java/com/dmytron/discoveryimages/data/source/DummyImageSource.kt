@@ -4,9 +4,11 @@ import com.dmytron.discoveryimages.data.Image
 
 class DummyImageSource: ImageSource {
     override fun fetch(): List<Image> = listOf(
-        Image("0", "url1", "dummy1"),
-        Image("1", "url2", "dummy2"),
-        Image("2", "url3", "dummy3"),
-        Image("3", "url4", "dummy4"),
+        Image("0", ASSETS + "p1.jpg", "dummy1"),
+        Image("1", ASSETS + "p2.jpg", "dummy2"),
+        Image("2", ASSETS + "p3.jpg", "dummy3"),
+        Image("3", ASSETS + "p4.jpg", "dummy4"),
     )
 }
+
+const val ASSETS = "file:///android_asset/"
