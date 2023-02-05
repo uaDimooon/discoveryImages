@@ -8,7 +8,7 @@ import com.dmytron.discoveryimages.data.Image
 
 @Composable
 fun ImagesGrid(images: List<Image>) {
-    LazyVerticalGrid(columns = GridCells.Fixed(5)) {
+    LazyVerticalGrid(columns = GridCells.Fixed(3)) {
         items(images) { image ->
             ImageItem(image)
         }

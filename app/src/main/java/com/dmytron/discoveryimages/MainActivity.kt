@@ -9,9 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.Observer
-import com.dmytron.discoveryimages.data.source.DummyImageSource
 import com.dmytron.discoveryimages.ui.ImagesGrid
 import com.dmytron.discoveryimages.ui.theme.DiscoveryImagesTheme
 import java.util.function.Consumer
@@ -30,12 +31,13 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
 
-@Composable
-fun mainContent() = Surface(
-    modifier = Modifier.fillMaxSize(),
-    color = MaterialTheme.colorScheme.background
-) {
+    @Composable
+    fun mainContent() = Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        val images by photosViewModel.images.observeAsState(listOf())
+        ImagesGrid(images = images)
+    }
 }
-    

@@ -23,7 +23,7 @@ class FlickrImageSource : ImageSource {
     override suspend fun fetch(): List<Image> = client.imageSearch().photos.photo.map { image ->
         Image(
             id = image.id,
-            url = "https://farm${image.farm}.staticflickr.com/${image.server}/${image.id}_${image.secret}.jpg",
+            url = "https://farm${image.farm}.staticflickr.com/${image.server}/${image.id}_${image.secret}_q.jpg",
             title = image.title
         )
     }

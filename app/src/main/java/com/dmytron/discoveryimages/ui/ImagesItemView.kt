@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.dmytron.discoveryimages.data.Image
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -22,12 +23,13 @@ fun ImageItem(image: Image) {
             .fillMaxWidth(),
         shape = RoundedCornerShape(corner = CornerSize(16.dp))
     ) {
+        AsyncImage(model = image.url, contentDescription = image.title)
         Column(
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth()
         ) {
-            Text(text = image.title)
+            //Text(text = image.title)
         }
     }
 }
