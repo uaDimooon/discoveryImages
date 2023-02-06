@@ -38,13 +38,30 @@ fun SearchHistoryView(
             searchText = searchState.searchTerm,
             onSearchTextChanged = { viewModel.onSearchTermChanged(it) },
             onClearClick = { viewModel.onClear() },
-            onNavigateBack = { navController.popBackStack() })
+            onNavigateBack = { navController.popBackStack() },
+            onSearchComplete = {
+                viewModel.onClear()
+                showNewImages(
+                    imagesViewModel,
+                    navController,
+                    searchState.activeSearch
+                )
+            }
+        )
 
         History(terms = searchState.history) { term ->
-            imagesViewModel.loadImages(term)
-            navController.navigate(route = Destination.ImagesGrid.target)
+            showNewImages(imagesViewModel, navController, term)
         }
     }
+}
+
+private fun showNewImages(
+    viewModel: ImagesViewModel,
+    navController: NavHostController,
+    term: String
+) {
+    viewModel.loadImages(term)
+    navController.navigate(route = Destination.ImagesGrid.target)
 }
 
 @Composable

@@ -9,19 +9,21 @@ class SearchViewModel : ViewModel() {
     private val repository: ImageRepository = ImageRepository.flickrRepository()
     private var allTerms: ArrayList<String> = ArrayList()
     private val searchTextFlow: MutableStateFlow<String> = MutableStateFlow("")
+    private val activeSearchFlow: MutableStateFlow<String> = MutableStateFlow("")
     private var showProgressBarFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private var matchedTermsFlow: MutableStateFlow<List<String>> = MutableStateFlow(arrayListOf())
 
     val searchState = combine(
         searchTextFlow,
         matchedTermsFlow,
-        showProgressBarFlow
-    ) { text, matchedTerms, progress ->
+        showProgressBarFlow, activeSearchFlow
+    ) { text, matchedTerms, progress, activeSearch ->
 
         SearchState(
             text,
             matchedTerms,
-            progress
+            progress,
+            activeSearch
         )
     }
 
@@ -30,10 +32,10 @@ class SearchViewModel : ViewModel() {
     }
 
     fun loadHistory() {
-        val searcgHistory = repository.searchHistory()
+        val searchHistory = repository.searchHistory()
 
-        if (searcgHistory != null) {
-            allTerms.addAll(searcgHistory)
+        if (searchHistory != null) {
+            allTerms.addAll(searchHistory)
         }
     }
 
@@ -43,6 +45,7 @@ class SearchViewModel : ViewModel() {
             matchedTermsFlow.value = repository.searchHistory()
             return
         }
+        activeSearchFlow.value = term
         val usersFromSearch = repository.searchHistory().filter { x ->
             x.contains(term)
         }
@@ -58,7 +61,8 @@ class SearchViewModel : ViewModel() {
 data class SearchState(
     val searchTerm: String = "",
     val history: List<String> = arrayListOf(),
-    val showProgress: Boolean = false
+    val showProgress: Boolean = false,
+    val activeSearch: String = ""
 ) {
 
     companion object {

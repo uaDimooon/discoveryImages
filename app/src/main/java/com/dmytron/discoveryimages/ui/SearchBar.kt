@@ -34,7 +34,8 @@ fun SearchBar(
     placeholderText: String = "",
     onSearchTextChanged: (String) -> Unit = {},
     onClearClick: () -> Unit = {},
-    onNavigateBack: () -> Unit = {}
+    onNavigateBack: () -> Unit = {},
+    onSearchComplete: () -> Unit = {}
 ) {
     var showClearButton by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -79,13 +80,13 @@ fun SearchBar(
                             contentDescription = "clear button"
                         )
                     }
-
                 }
             },
             maxLines = 1,
             singleLine = true,
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = {
+                onSearchComplete()
                 keyboardController?.hide()
             }),
         )
