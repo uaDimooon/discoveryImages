@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @Composable
-fun SearchBar(
+fun GridNavBar(
     searchText: String,
     placeholderText: String = "",
     onSearchTextChanged: (String) -> Unit = {},

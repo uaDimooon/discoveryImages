@@ -34,7 +34,7 @@ fun SearchHistoryView(
         .collectAsState(initial = SearchState.Empty)
 
     Column(modifier = Modifier.fillMaxSize()) {
-        SearchBar(
+        GridNavBar(
             searchText = searchState.searchTerm,
             onSearchTextChanged = { viewModel.onSearchTermChanged(it) },
             onClearClick = { viewModel.onClear() },

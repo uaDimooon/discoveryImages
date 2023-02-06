@@ -6,7 +6,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.dmytron.discoveryimages.ui.ImageBrowser
+import com.dmytron.discoveryimages.ui.ImageDetailsView
 import com.dmytron.discoveryimages.ui.ImagesGrid
 import com.dmytron.discoveryimages.ui.SearchHistoryView
 
@@ -43,8 +43,7 @@ fun Navigation(
         }
 
         composable(Destination.Details.target) {
-            ImageBrowser(
-                searchViewModel = searchViewModel,
+            ImageDetailsView(
                 imagesViewModel = imageGridViewModel,
                 navController = navHostController
             )

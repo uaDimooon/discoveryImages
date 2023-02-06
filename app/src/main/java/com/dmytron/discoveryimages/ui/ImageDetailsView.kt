@@ -1,6 +1,5 @@
 package com.dmytron.discoveryimages.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.TopAppBar
@@ -14,15 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.dmytron.discoveryimages.ImagesViewModel
-import com.dmytron.discoveryimages.SearchViewModel
 
 @Composable
-fun ImageBrowser(
-    searchViewModel: SearchViewModel,
-    imagesViewModel: ImagesViewModel,
-    navController: NavController
-) {
-    Log.e("TAG", "" + imagesViewModel.detailsImage)
+fun ImageDetailsView(imagesViewModel: ImagesViewModel, navController: NavController) {
     Column {
         TitleBar(imagesViewModel.detailsImage?.title ?: "") { navController.popBackStack() }
         AsyncImage(
