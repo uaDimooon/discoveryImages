@@ -24,7 +24,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.dmytron.discoveryimages.SearchState
 
 
 @ExperimentalAnimationApi
@@ -106,34 +105,11 @@ fun SearchBar(
 @Composable
 fun NoSearchResults() {
 
-    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center,
+    Column(
+        modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center,
         horizontalAlignment = CenterHorizontally
     ) {
         Text("No matches found")
-    }
-}
-
-@ExperimentalComposeUiApi
-@ExperimentalAnimationApi
-@Composable
-fun UserSearchUI(navHostController: NavHostController, userSearchViewModel: UserSearchViewModel) {
-    val searchState by rememberFlowWithLifecycle(userSearchViewModel.userSearchModelState)
-        .collectAsState(initial = SearchState.Empty)
-    SearchBarUI(
-        searchText = searchState.searchText,
-        placeholderText = "Search users",
-        onSearchTextChanged = { userSearchViewModel.onSearchTextChanged(it) },
-        onClearClick = { userSearchViewModel.onClearClick() },
-        onNavigateBack = {
-            navHostController.popBackStack()
-        },
-        matchesFound = searchState.users.isNotEmpty()
-    ) {
-
-        Users(users = searchState.users) {
-                user ->
-            navHostController.navigate(route = "${NavPath.UserDetail.route}?id=${user.id}")
-        }
     }
 }
 
