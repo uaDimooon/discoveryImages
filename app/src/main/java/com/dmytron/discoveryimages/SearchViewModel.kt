@@ -37,7 +37,7 @@ class SearchViewModel : ViewModel() {
         }
     }
 
-    fun onSearch(term: String) {
+    fun onSearchTermChanged(term: String) {
         searchTextFlow.value = term
         if (term.isEmpty()) {
             matchedTermsFlow.value = repository.searchHistory()

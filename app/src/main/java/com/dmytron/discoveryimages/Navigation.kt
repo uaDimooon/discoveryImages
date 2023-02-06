@@ -39,7 +39,11 @@ fun Navigation(
         }
 
         composable(Destination.Search.target) {
-            SearchHistoryView(navController = navHostController, viewModel = searchViewModel)
+            SearchHistoryView(
+                navController = navHostController,
+                viewModel = searchViewModel,
+                imagesViewModel = imageGridViewModel
+            )
         }
     }
 }

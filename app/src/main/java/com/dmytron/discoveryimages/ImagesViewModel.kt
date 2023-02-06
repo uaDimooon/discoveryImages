@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dmytron.discoveryimages.data.Image
 import com.dmytron.discoveryimages.data.ImageRepository
-import com.dmytron.discoveryimages.data.source.flickr.FlickrImageSource
 import kotlinx.coroutines.launch
 
 class ImagesViewModel: ViewModel() {
