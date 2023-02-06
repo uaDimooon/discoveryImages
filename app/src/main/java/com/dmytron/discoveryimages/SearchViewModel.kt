@@ -1,13 +1,12 @@
 package com.dmytron.discoveryimages
 
 import androidx.lifecycle.ViewModel
-import com.dmytron.discoveryimages.data.ImageRepository
+import androidx.lifecycle.ViewModelProvider
+import com.dmytron.discoveryimages.data.Repository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 
-class SearchViewModel : ViewModel() {
-    private val repository: ImageRepository = ImageRepository.flickrRepository()
-    private var allTerms: ArrayList<String> = ArrayList()
+class SearchViewModel(private val repository: Repository) : ViewModel() {
     private val searchTextFlow: MutableStateFlow<String> = MutableStateFlow("")
     private val activeSearchFlow: MutableStateFlow<String> = MutableStateFlow("")
     private var showProgressBarFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -16,9 +15,9 @@ class SearchViewModel : ViewModel() {
     val searchState = combine(
         searchTextFlow,
         matchedTermsFlow,
-        showProgressBarFlow, activeSearchFlow
+        showProgressBarFlow,
+        activeSearchFlow
     ) { text, matchedTerms, progress, activeSearch ->
-
         SearchState(
             text,
             matchedTerms,
@@ -28,15 +27,8 @@ class SearchViewModel : ViewModel() {
     }
 
     init {
-        loadHistory()
-    }
-
-    fun loadHistory() {
-        val searchHistory = repository.searchHistory()
-
-        if (searchHistory != null) {
-            allTerms.addAll(searchHistory)
-        }
+        activeSearchFlow.value = repository.lastSearchTerm()
+        matchedTermsFlow.value = repository.searchHistory()
     }
 
     fun onSearchTermChanged(term: String) {
@@ -52,9 +44,18 @@ class SearchViewModel : ViewModel() {
         matchedTermsFlow.value = usersFromSearch
     }
 
+    fun onSearchComplete() {
+        repository.addToSearchHistory(activeSearchFlow.value)
+    }
     fun onClear() {
         searchTextFlow.value = ""
         matchedTermsFlow.value = repository.searchHistory()
+    }
+
+    class Factory(private val repository: Repository) : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return SearchViewModel(repository) as T
+        }
     }
 }
 

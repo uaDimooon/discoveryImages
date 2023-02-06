@@ -1,5 +1,6 @@
 package com.dmytron.discoveryimages
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,11 +11,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.compose.rememberNavController
+import com.dmytron.discoveryimages.data.Repository
 import com.dmytron.discoveryimages.ui.theme.DiscoveryImagesTheme
 
 class MainActivity : ComponentActivity() {
-    private val imagesViewModel: ImagesViewModel by viewModels()
-    private val searchViewModel: SearchViewModel by viewModels()
+    private val imagesViewModel: ImagesViewModel by viewModels { ImagesViewModel.Factory(repository()) }
+    private val searchViewModel: SearchViewModel by viewModels { SearchViewModel.Factory(repository()) }
 
     @OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,4 +33,9 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    private fun preferences(): SharedPreferences = getSharedPreferences(PREFERENCES, MODE_PRIVATE)
+    private fun repository(): Repository = Repository.flickrRepository(preferences())
 }
+
+private const val PREFERENCES = "discovery_shared_preferences"

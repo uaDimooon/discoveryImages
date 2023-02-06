@@ -40,6 +40,7 @@ fun SearchHistoryView(
             onClearClick = { viewModel.onClear() },
             onNavigateBack = { navController.popBackStack() },
             onSearchComplete = {
+                viewModel.onSearchComplete()
                 viewModel.onClear()
                 showNewImages(
                     imagesViewModel,
