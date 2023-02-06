@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 class ImagesViewModel(private val repository: Repository) : ViewModel() {
     private val mutableImages = MutableLiveData<List<Image>>()
     val images: LiveData<List<Image>> = mutableImages
+    var detailsId: Image? = null
 
     private val pages: ArrayList<List<Image>> = arrayListOf()
     private var page: Int = 0
@@ -54,4 +55,4 @@ class ImagesViewModel(private val repository: Repository) : ViewModel() {
     }
 }
 
-private const val PAGE_SIZE = 50
+private const val PAGE_SIZE = 25

@@ -1,5 +1,6 @@
 package com.dmytron.discoveryimages.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,11 +17,12 @@ import com.dmytron.discoveryimages.data.Image
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ImageItem(image: Image) {
+fun ImageItem(image: Image, onClick: () -> Unit = {}) {
     Card(
         modifier = Modifier
             .padding(horizontal = 8.dp, vertical = 8.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable { onClick() },
         shape = RoundedCornerShape(corner = CornerSize(16.dp))
     ) {
         AsyncImage(model = image.url, contentDescription = image.title)

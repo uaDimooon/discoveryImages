@@ -16,6 +16,7 @@ class Repository private constructor(
     }
 
     suspend fun fetchImages(term: String): List<Image> = source.fetch(term)
+    fun loadImage(image: Image): String = ""
 
     fun addToSearchHistory(term: String) {
         history.add(term)

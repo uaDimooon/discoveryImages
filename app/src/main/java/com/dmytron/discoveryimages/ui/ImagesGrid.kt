@@ -33,9 +33,16 @@ fun ImagesGrid(
             navHostController.navigate(route = Destination.Search.target)
         })
         val gridState = rememberLazyGridState()
-        LazyVerticalGrid(columns = GridCells.Fixed(3), state = gridState) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            state = gridState,
+        ) {
             items(images) { image ->
-                ImageItem(image)
+                ImageItem(image) {
+                    viewModel.detailsId = image
+                    navHostController.navigate(Destination.Details.target)
+                }
+
             }
         }
         gridState.OnBottom {
