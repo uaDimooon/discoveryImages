@@ -9,15 +9,41 @@ class ImagesViewModel(private val repository: Repository) : ViewModel() {
     private val mutableImages = MutableLiveData<List<Image>>()
     val images: LiveData<List<Image>> = mutableImages
 
+    private val pages: ArrayList<List<Image>> = arrayListOf()
+    private var page: Int = 0
+
     init {
         viewModelScope.launch {
-            mutableImages.postValue(repository.fetchImages(repository.lastSearchTerm()))
+            loadImages(repository.lastSearchTerm())
         }
     }
 
     fun loadImages(term: String) {
         viewModelScope.launch {
-            mutableImages.postValue(repository.fetchImages(term))
+            val loadedImages: List<Image> = repository.fetchImages(term)
+            var count = 0
+            var pageImages: ArrayList<Image> = arrayListOf()
+            pages.clear()
+            page = 0
+            for (element in loadedImages) {
+                pageImages.add(element)
+                count++
+                if (count == PAGE_SIZE) {
+                    pages.add(pageImages)
+                    count = 0
+                    pageImages = arrayListOf()
+                }
+            }
+            pages.add(pageImages)
+            mutableImages.postValue(if (pages.isEmpty()) listOf() else pages[0])
+        }
+    }
+
+    fun nextPage() {
+        if (pages.size > page + 1) {
+            val imagesList: ArrayList<Image> = ArrayList(images.value)
+            imagesList.addAll(pages[++page])
+            mutableImages.value = imagesList
         }
     }
 
@@ -27,3 +53,5 @@ class ImagesViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 }
+
+private const val PAGE_SIZE = 50

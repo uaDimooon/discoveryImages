@@ -22,6 +22,5 @@ class Repository private constructor(
     }
 
     fun searchHistory(): List<String> = history.get()
-
     fun lastSearchTerm(): String = history.lastTerm()
 }

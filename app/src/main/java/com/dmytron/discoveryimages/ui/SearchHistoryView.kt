@@ -52,6 +52,7 @@ fun SearchHistoryView(
 
         History(terms = searchState.history) { term ->
             viewModel.onSearchTermChanged(term)
+            viewModel.onSearchComplete()
             viewModel.onClear()
             showNewImages(imagesViewModel, navController, term)
         }
