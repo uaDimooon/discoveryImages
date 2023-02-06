@@ -35,8 +35,8 @@ class FlickrImageSource : ImageSource {
     override fun getOriginalQualityImage(image: Image): Image {
         return image.copy(
             url = image.url.replace(
-                "_${PictureQuality.THUMBNAIL}",
-                "_${PictureQuality.DETAILS}"
+                "_${PictureQuality.THUMBNAIL.value}",
+                "_${PictureQuality.DETAILS.value}"
             )
         )
     }
@@ -71,7 +71,7 @@ class FlickrImageSource : ImageSource {
         secret: String,
         quality: PictureQuality
     ): String =
-        "https://farm${farm}.staticdflickr.com/${server}/${id}_${secret}_${quality.value}.jpg"
+        "https://farm${farm}.staticflickr.com/${server}/${id}_${secret}_${quality.value}.jpg"
 
     private enum class PictureQuality(val value: String) {
         THUMBNAIL(IMAGE_THUMBNAIL_QUALITY),
@@ -91,4 +91,4 @@ private const val CONNECTION_TIMEOUT_MS: Long = 50
 private const val REQUEST_SEARCH_TEXT_PARAM_KEY = "text"
 private const val REQUEST_SEARCH_API_KEY_PARAM_KEY = "api_key"
 private const val IMAGE_THUMBNAIL_QUALITY = "q"
-private const val IMAGE_ORIGINAL_QUALITY = "o"
+private const val IMAGE_ORIGINAL_QUALITY = "c"
