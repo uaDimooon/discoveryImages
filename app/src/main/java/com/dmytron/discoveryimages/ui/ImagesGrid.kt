@@ -1,5 +1,6 @@
 package com.dmytron.discoveryimages.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.*
@@ -27,19 +28,19 @@ fun ImagesGrid(
 
     val images by viewModel.images.observeAsState(listOf())
     val search by searchViewModel.searchState.collectAsState(initial = SearchState.Empty)
-
+    Log.e("TAG", "" + images)
     Column(modifier = Modifier.fillMaxSize()) {
         SearchBar(term = search.activeSearch, searchBarClick = {
             navHostController.navigate(route = Destination.Search.target)
         })
         val gridState = rememberLazyGridState()
         LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
+            columns = GridCells.Fixed(2),
             state = gridState,
         ) {
             items(images) { image ->
                 ImageItem(image) {
-                    viewModel.detailsId = image
+                    viewModel.setImageForDetails(image)
                     navHostController.navigate(Destination.Details.target)
                 }
 

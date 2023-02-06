@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.dmytron.discoveryimages.ImagesViewModel
 import com.dmytron.discoveryimages.SearchViewModel
 
@@ -20,7 +21,11 @@ fun ImageBrowser(
     navController: NavController
 ) {
     Column() {
-        TitleBar("Hello") { navController.popBackStack() }
+        TitleBar(imagesViewModel.detailsImage?.title ?: "") { navController.popBackStack() }
+        AsyncImage(
+            model = imagesViewModel.detailsImage?.url,
+            contentDescription = imagesViewModel.detailsImage?.title
+        )
     }
 }
 
