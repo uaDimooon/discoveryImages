@@ -1,5 +1,6 @@
 package com.dmytron.discoveryimages.data.source.flickr
 
+import android.util.Log
 import com.dmytron.discoveryimages.BuildConfig
 import com.dmytron.discoveryimages.data.Image
 import com.dmytron.discoveryimages.data.source.ImageSource
@@ -11,6 +12,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.QueryMap
+import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 
 class FlickrImageSource : ImageSource {
@@ -42,7 +44,12 @@ class FlickrImageSource : ImageSource {
     }
 
     override suspend fun fetch(term: String): List<Image> =
-        client.imageSearch(fetchParams(term)).mapToDomainModel()
+        try {
+            client.imageSearch(fetchParams(term)).mapToDomainModel()
+        } catch (ex: UnknownHostException) {
+            Log.e(FlickrImageSource::class.java.name, "No internet connection")
+            listOf()
+        }
 
     private fun fetchParams(term: String): Map<String, String> = mapOf(
         REQUEST_SEARCH_TEXT_PARAM_KEY to term,
