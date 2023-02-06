@@ -26,8 +26,8 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colorScheme.background) {
                     Navigation(
                         rememberNavController(),
-                        rememberScaffoldState(),
-                        imageGridViewModel = imagesViewModel, searchViewModel
+                        imageGridViewModel = imagesViewModel,
+                        searchViewModel = searchViewModel
                     )
                 }
             }

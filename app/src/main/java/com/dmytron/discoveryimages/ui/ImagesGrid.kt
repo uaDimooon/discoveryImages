@@ -18,9 +18,9 @@ import com.dmytron.discoveryimages.Destination
 import com.dmytron.discoveryimages.data.Image
 
 @Composable
-fun ImagesGrid(images: List<Image>, navHostController: NavHostController) {
+fun ImagesGrid(images: List<Image>, term: String, navHostController: NavHostController) {
     Column(modifier = Modifier.fillMaxSize()) {
-        SearchBar(searchBarClick = {
+        SearchBar(term = term, searchBarClick = {
             navHostController.navigate(route = Destination.Search.target)
         })
         LazyVerticalGrid(columns = GridCells.Fixed(3)) {
@@ -32,8 +32,8 @@ fun ImagesGrid(images: List<Image>, navHostController: NavHostController) {
 }
 
 @Composable
-fun SearchBar(searchBarClick: () -> Unit) {
-    TopAppBar(title = { Text("Let's Discover") }, actions = {
+fun SearchBar(term: String, searchBarClick: () -> Unit) {
+    TopAppBar(title = { Text("Let's Discover: ${term}") }, actions = {
         IconButton(
             modifier = Modifier,
             onClick = { searchBarClick() }) {
