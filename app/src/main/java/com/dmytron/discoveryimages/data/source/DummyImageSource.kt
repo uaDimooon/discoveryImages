@@ -3,7 +3,7 @@ package com.dmytron.discoveryimages.data.source
 import com.dmytron.discoveryimages.data.Image
 
 class DummyImageSource: ImageSource {
-    override suspend fun fetch(): List<Image> = listOf(
+    override suspend fun fetch(term: String): List<Image> = listOf(
         Image("0", ASSETS + "p1.jpg", "dummy1"),
         Image("1", ASSETS + "p2.jpg", "dummy2"),
         Image("2", ASSETS + "p3.jpg", "dummy3"),

@@ -10,6 +10,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.QueryMap
 import java.util.concurrent.TimeUnit
 
 class FlickrImageSource : ImageSource {
@@ -20,13 +21,19 @@ class FlickrImageSource : ImageSource {
             .create(API::class.java)
     }
 
-    override suspend fun fetch(): List<Image> = client.imageSearch().photos.photo.map { image ->
-        Image(
-            id = image.id,
-            url = "https://farm${image.farm}.staticflickr.com/${image.server}/${image.id}_${image.secret}_q.jpg",
-            title = image.title
-        )
-    }
+    override suspend fun fetch(term: String): List<Image> =
+        client.imageSearch(
+            mapOf(
+                "text" to term,
+                "api_key" to BuildConfig.FLICKR_KEY
+            )
+        ).photos.photo.map { image ->
+            Image(
+                id = image.id,
+                url = "https://farm${image.farm}.staticflickr.com/${image.server}/${image.id}_${image.secret}_q.jpg",
+                title = image.title
+            )
+        }
 
     private fun converter() = GsonConverterFactory.create(
         GsonBuilder().setFieldNamingPolicy(
@@ -41,8 +48,8 @@ class FlickrImageSource : ImageSource {
 }
 
 interface API {
-    @GET("?method=flickr.photos.search&format=json&nojsoncallback=1&text=lviv&api_key=${BuildConfig.FLICKR_KEY}")
-    suspend fun imageSearch(): FlickrPhotoSearchResponse
+    @GET("?method=flickr.photos.search&format=json&nojsoncallback=1")
+    suspend fun imageSearch(@QueryMap options: Map<String, String>): FlickrPhotoSearchResponse
 }
 
 private const val URL = "https://api.flickr.com/services/rest/"

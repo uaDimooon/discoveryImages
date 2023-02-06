@@ -11,6 +11,6 @@ class ImageRepository private constructor(private val source: ImageSource) {
         fun flickrRepository() = ImageRepository(FlickrImageSource())
     }
 
-    suspend fun fetchImages(): List<Image> = source.fetch()
+    suspend fun fetchImages(term: String): List<Image> = source.fetch(term)
     fun searchHistory(): List<String> = searchHistory
 }

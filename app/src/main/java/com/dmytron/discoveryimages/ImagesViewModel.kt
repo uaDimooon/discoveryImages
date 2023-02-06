@@ -16,7 +16,13 @@ class ImagesViewModel: ViewModel() {
 
     init {
         viewModelScope.launch {
-            mutableImages.postValue(repo.fetchImages())
+            mutableImages.postValue(repo.fetchImages("kyiv"))
+        }
+    }
+
+    fun loadImages(term: String) {
+        viewModelScope.launch {
+            mutableImages.postValue(repo.fetchImages(term))
         }
     }
 }
