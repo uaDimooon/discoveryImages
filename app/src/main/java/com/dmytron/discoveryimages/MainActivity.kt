@@ -14,6 +14,7 @@ import com.dmytron.discoveryimages.ui.theme.DiscoveryImagesTheme
 
 class MainActivity : ComponentActivity() {
     private val imagesViewModel: ImagesViewModel by viewModels()
+    private val searchViewModel: SearchViewModel by viewModels()
 
     @OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     Navigation(
                         rememberNavController(),
                         rememberScaffoldState(),
-                        imageGridViewModel = imagesViewModel
+                        imageGridViewModel = imagesViewModel, searchViewModel
                     )
                 }
             }

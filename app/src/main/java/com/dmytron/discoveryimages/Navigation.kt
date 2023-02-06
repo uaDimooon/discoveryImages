@@ -11,9 +11,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.dmytron.discoveryimages.ui.ImagesGrid
+import com.dmytron.discoveryimages.ui.SearchHistoryView
 
 enum class Destination(val target: String) {
-    ImagesGrid(target = "images_grid")
+    ImagesGrid(target = "images_grid"),
+    Search(target = "search")
 }
 
 @ExperimentalComposeUiApi
@@ -22,7 +24,8 @@ enum class Destination(val target: String) {
 fun Navigation(
     navHostController: NavHostController,
     scaffoldState: ScaffoldState,
-    imageGridViewModel: ImagesViewModel
+    imageGridViewModel: ImagesViewModel,
+    searchViewModel: SearchViewModel
 ) {
 
     NavHost(
@@ -32,7 +35,11 @@ fun Navigation(
 
         composable(Destination.ImagesGrid.target) {
             val images by imageGridViewModel.images.observeAsState(listOf())
-            ImagesGrid(images = images)
+            ImagesGrid(images = images, navHostController)
+        }
+
+        composable(Destination.Search.target) {
+            SearchHistoryView(navController = navHostController, viewModel = searchViewModel)
         }
     }
 }

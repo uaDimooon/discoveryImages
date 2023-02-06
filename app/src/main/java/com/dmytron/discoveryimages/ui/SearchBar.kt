@@ -40,8 +40,6 @@ fun SearchBar(
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
 
-
-
     TopAppBar(title = { Text("") }, navigationIcon = {
         IconButton(onClick = { onNavigateBack() }) {
             Icon(
@@ -51,7 +49,6 @@ fun SearchBar(
             )
         }
     }, actions = {
-
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -92,8 +89,6 @@ fun SearchBar(
                 keyboardController?.hide()
             }),
         )
-
-
     })
 
 
@@ -104,7 +99,6 @@ fun SearchBar(
 
 @Composable
 fun NoSearchResults() {
-
     Column(
         modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center,
         horizontalAlignment = CenterHorizontally
