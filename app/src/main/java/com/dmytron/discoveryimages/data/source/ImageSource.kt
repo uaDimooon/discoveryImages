@@ -4,4 +4,5 @@ import com.dmytron.discoveryimages.data.Image
 
 interface ImageSource {
     suspend fun fetch(term: String): List<Image>
+    fun getOriginalQualityImage(image: Image): Image
 }
