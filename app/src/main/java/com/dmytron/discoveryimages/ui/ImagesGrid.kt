@@ -28,7 +28,7 @@ fun ImagesGrid(
 
     val images by viewModel.images.observeAsState(listOf())
     val search by searchViewModel.searchState.collectAsState(initial = SearchState.Empty)
-    Log.e("TAG", "" + images)
+
     Column(modifier = Modifier.fillMaxSize()) {
         SearchBar(term = search.activeSearch, searchBarClick = {
             navHostController.navigate(route = Destination.Search.target)

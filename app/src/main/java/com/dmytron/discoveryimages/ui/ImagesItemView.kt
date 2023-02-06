@@ -1,9 +1,7 @@
 package com.dmytron.discoveryimages.ui
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -20,18 +18,18 @@ import com.dmytron.discoveryimages.data.Image
 fun ImageItem(image: Image, onClick: () -> Unit = {}) {
     Card(
         modifier = Modifier
-            .padding(horizontal = 8.dp, vertical = 8.dp)
+            .padding(horizontal = 4.dp, vertical = 4.dp)
             .fillMaxWidth()
+            .height(200.dp)
             .clickable { onClick() },
-        shape = RoundedCornerShape(corner = CornerSize(16.dp))
+        shape = RoundedCornerShape(corner = CornerSize(4.dp))
     ) {
-        AsyncImage(model = image.url, contentDescription = image.title)
-        Column(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
-        ) {
-            //Text(text = image.title)
-        }
+        Text(modifier = Modifier.fillMaxWidth(), text = image.title, maxLines = 1)
+        AsyncImage(
+            modifier = Modifier.fillMaxSize().padding(4.dp),
+            model = image.url,
+            contentDescription = image.title
+        )
+
     }
 }
